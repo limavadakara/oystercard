@@ -4,4 +4,10 @@ describe Oystercard do
     expect(subject.balance).to equal 0
   end
 
+  it 'tops-up the balance' do
+     expect(subject.top_up(10)).to equal 10
+  end
+
+
+
 end
