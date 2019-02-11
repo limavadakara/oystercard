@@ -12,6 +12,11 @@ describe Oystercard do
     expect {subject.top_up(100)}.to raise_error "The maximum balance of #{Oystercard::TOPUP_LIMIT} exceeded"
   end
 
+  it 'deducts money for a journey' do
+    subject.top_up(10)
+    expect(subject.deduct(5)).to eq 5
+  end
+
 
 
 end

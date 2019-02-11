@@ -9,4 +9,8 @@ class Oystercard
     fail "The maximum balance of #{Oystercard::TOPUP_LIMIT} exceeded" if @balance + value > 90
     @balance += value
   end
+
+  def deduct(value)
+    @balance -= value
+  end
 end
