@@ -22,11 +22,13 @@ describe Oystercard do
   end
 
   it 'allows user to touch in' do
+    subject.top_up(10)
     subject.touch_in
     expect(subject.in_journey?).to equal true
   end
 
   it 'raises error if an already touched-in card is touched in again' do
+    subject.top_up(10)
     subject.touch_in
     expect { subject.touch_in }.to raise_error "Card already touched in"
   end
@@ -34,6 +36,10 @@ describe Oystercard do
   it 'allows user to touch out' do
     subject.touch_out
     expect(subject.in_journey?).to equal false
+  end
+
+  it 'raise error if it doesnt have minimum balance' do
+    expect{ subject.touch_in }.to raise_error "Not enough balance"
   end
 
 
