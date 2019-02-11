@@ -8,6 +8,10 @@ describe Oystercard do
      expect(subject.top_up(10)).to equal 10
   end
 
+  it 'throws error if balance is topped up to more than £90' do
+    expect {subject.top_up(100)}.to raise_error "The maximum balance of #{Oystercard::TOPUP_LIMIT} exceeded"
+  end
+
 
 
 end
