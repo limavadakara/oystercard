@@ -17,6 +17,9 @@ describe Oystercard do
     expect(subject.deduct(5)).to eq 5
   end
 
+  it 'indicates if it is in a journey' do
+    expect(subject.in_journey?).to equal false
+  end
 
 
 end

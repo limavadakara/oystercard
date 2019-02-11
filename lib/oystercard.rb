@@ -3,6 +3,7 @@ class Oystercard
   TOPUP_LIMIT = 90
   def initialize
     @balance = 0
+    @in_use = false
   end
 
   def top_up(value)
@@ -13,4 +14,10 @@ class Oystercard
   def deduct(value)
     @balance -= value
   end
+
+  def in_journey?
+    @in_use
+  end
+
+
 end
