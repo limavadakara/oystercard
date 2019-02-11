@@ -21,5 +21,15 @@ describe Oystercard do
     expect(subject.in_journey?).to equal false
   end
 
+  it 'allows user to touch in' do
+    subject.touch_in
+    expect(subject.in_journey?).to equal true
+  end
+
+  it 'raises error if an already touched-in card is touched in again' do
+    subject.touch_in
+    expect { subject.touch_in }.to raise_error "Card already touched in"
+  end
+
 
 end

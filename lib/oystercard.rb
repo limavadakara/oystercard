@@ -19,5 +19,10 @@ class Oystercard
     @in_use
   end
 
+  def touch_in
+    raise "Card already touched in" if @in_use == true
+    @in_use = true
+  end
+
 
 end
