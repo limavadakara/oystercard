@@ -31,5 +31,10 @@ describe Oystercard do
     expect { subject.touch_in }.to raise_error "Card already touched in"
   end
 
+  it 'allows user to touch out' do
+    subject.touch_out
+    expect(subject.in_journey?).to equal false
+  end
+
 
 end
