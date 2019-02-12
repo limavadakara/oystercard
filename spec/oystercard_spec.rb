@@ -55,4 +55,7 @@ describe Oystercard do
     expect(subject.entry_station).to equal nil
   end
 
+  it 'gets created with an empty list of journeys' do
+    expect(subject.journeys).to be_a Array
+  end
 end
