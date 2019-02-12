@@ -1,6 +1,7 @@
 require 'oystercard.rb'
 describe Oystercard do
   let (:entry_station) { double() }
+  let (:exit_station) {double()}
   it 'gets created with a default balance of 0' do
     expect(subject.balance).to equal 0
   end
@@ -30,7 +31,7 @@ describe Oystercard do
   end
 
   it 'allows user to touch out' do
-    subject.touch_out
+    subject.touch_out(exit_station)
     expect(subject.in_journey?).to equal false
   end
 
@@ -39,7 +40,7 @@ describe Oystercard do
   end
 
   it 'its balance is reduced by the right amount when it is touched out' do
-    expect { subject.touch_out }.to change { subject.balance }.by(-Oystercard::MIN_BALANCE)
+    expect { subject.touch_out(exit_station) }.to change { subject.balance }.by(-Oystercard::MIN_BALANCE)
   end
 
   it 'it remembers the entry station when touching in' do
@@ -51,11 +52,20 @@ describe Oystercard do
   it 'forgets entry station on touch out' do
     subject.top_up(10)
     subject.touch_in(entry_station)
-    subject.touch_out
+    subject.touch_out(exit_station)
     expect(subject.entry_station).to equal nil
   end
 
   it 'gets created with an empty list of journeys' do
     expect(subject.journeys).to be_a Array
   end
+
+  it 'creates a journey in the history when touched in and out' do
+    subject.top_up(10)
+    subject.touch_in(entry_station)
+    subject.touch_out(exit_station)
+    expect(subject.journeys).to eq [{entry_station: entry_station, exit_station: exit_station}]
+  end
+
+
 end
