@@ -4,7 +4,7 @@ class Oystercard
   MIN_BALANCE = 1
   def initialize
     @balance = 0
-    @in_use = false
+
   end
 
   def top_up(value)
@@ -13,18 +13,18 @@ class Oystercard
   end
 
   def in_journey?
-    @in_use
+     @entry_station == nil ? false : true
   end
 
   def touch_in(station)
     raise "Card already touched in" if in_journey?
     raise "Not enough balance" if @balance < MIN_BALANCE
-    @in_use = true
+
     @entry_station = station
   end
 
   def touch_out
-    @in_use = false
+
     deduct(MIN_BALANCE)
     @entry_station = nil
   end
