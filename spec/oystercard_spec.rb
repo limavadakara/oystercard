@@ -48,4 +48,11 @@ describe Oystercard do
     expect(subject.entry_station).to equal entry_station
   end
 
+  it 'forgets entry station on touch out' do
+    subject.top_up(10)
+    subject.touch_in(entry_station)
+    subject.touch_out
+    expect(subject.entry_station).to equal nil
+  end
+
 end
