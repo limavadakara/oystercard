@@ -1,5 +1,6 @@
 require 'oystercard.rb'
 describe Oystercard do
+  let (:entry_station) { double() }
   it 'gets created with a default balance of 0' do
     expect(subject.balance).to equal 0
   end
@@ -18,14 +19,14 @@ describe Oystercard do
 
   it 'allows user to touch in' do
     subject.top_up(10)
-    subject.touch_in
+    subject.touch_in(entry_station)
     expect(subject.in_journey?).to equal true
   end
 
   it 'raises error if an already touched-in card is touched in again' do
     subject.top_up(10)
-    subject.touch_in
-    expect { subject.touch_in }.to raise_error "Card already touched in"
+    subject.touch_in(entry_station)
+    expect { subject.touch_in(entry_station) }.to raise_error "Card already touched in"
   end
 
   it 'allows user to touch out' do
@@ -34,11 +35,17 @@ describe Oystercard do
   end
 
   it 'raise error if it doesnt have minimum balance' do
-    expect{ subject.touch_in }.to raise_error "Not enough balance"
+    expect{ subject.touch_in(entry_station) }.to raise_error "Not enough balance"
   end
 
   it 'its balance is reduced by the right amount when it is touched out' do
     expect { subject.touch_out }.to change { subject.balance }.by(-Oystercard::MIN_BALANCE)
+  end
+
+  it 'it remembers the entry station when touching in' do
+    subject.top_up(10)
+    subject.touch_in(entry_station)
+    expect(subject.entry_station).to equal entry_station
   end
 
 end
